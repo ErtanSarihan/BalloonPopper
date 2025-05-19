@@ -6,7 +6,7 @@ namespace BalloonPopper.Scripts {
     public class BalloonBehavior : MonoBehaviour {
         [Header("Movement Settings")]
         public float floatSpeed = 1.5f;
-        public float swayAmount = 0.5f;
+        public float swayAmount = 1f;
         public float swaySpeed = 1.0f;
 
         [Header("Gameplay Settings")]
@@ -41,6 +41,10 @@ namespace BalloonPopper.Scripts {
         }
 
         private void Pop() {
+            GameManager gameManager = FindFirstObjectByType<GameManager>();
+            if (gameManager) {
+                gameManager.AddScore(pointValue);
+            }
             
             Debug.Log("Balloon popped! Points: " + pointValue);
 

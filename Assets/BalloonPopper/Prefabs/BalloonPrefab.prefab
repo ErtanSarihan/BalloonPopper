@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatSpeed: 1.5
-  swayAmount: 0.1
+  swayAmount: 0.5
   swaySpeed: 1
   pointValue: 1
   popEffect: {fileID: 0}
