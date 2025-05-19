@@ -15,6 +15,7 @@ namespace BalloonPopper.Scripts {
 
         private Vector3 _startPosition;
         private float _randomOffset;
+        private GameManager _gameManager;
 
         private void Start() {
             _startPosition = transform.position;
@@ -23,13 +24,14 @@ namespace BalloonPopper.Scripts {
 
             float randomX = Random.Range(-1f, 1f);
             transform.position = new Vector3(_startPosition.x + randomX, _startPosition.y, _startPosition.z);
+            _gameManager = FindFirstObjectByType<GameManager>();
         }
 
         private void Update() {
             transform.Translate(Vector3.up * (floatSpeed * Time.deltaTime));
 
-            float swayOffset = (float) Math.Sin((Time.time + _randomOffset) * swaySpeed) * swayAmount;
-            transform.position = new Vector3(_startPosition.x +  swayOffset, transform.position.y, _startPosition.z);
+            float swayOffset = (float)Math.Sin((Time.time + _randomOffset) * swaySpeed) * swayAmount;
+            transform.position = new Vector3(_startPosition.x + swayOffset, transform.position.y, _startPosition.z);
 
             if (transform.position.y > 10f) {
                 Destroy(gameObject);
@@ -37,7 +39,9 @@ namespace BalloonPopper.Scripts {
         }
 
         private void OnMouseDown() {
-            Pop();
+            if (_gameManager && _gameManager.IsGameActive()) {
+                Pop();
+            }
         }
 
         private void Pop() {
@@ -45,13 +49,13 @@ namespace BalloonPopper.Scripts {
             if (gameManager) {
                 gameManager.AddScore(pointValue);
             }
-            
+
             Debug.Log("Balloon popped! Points: " + pointValue);
 
             if (popEffect != null) {
                 Instantiate(popEffect, transform.position, Quaternion.identity);
             }
-            
+
             Destroy(gameObject);
         }
     }

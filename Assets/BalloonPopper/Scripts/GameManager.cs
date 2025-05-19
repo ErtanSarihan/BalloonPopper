@@ -8,6 +8,7 @@ namespace BalloonPopper.Scripts {
         public TextMeshProUGUI scoreText;
         public TextMeshProUGUI timerText;
         public GameObject gameOverPanel;
+        public TextMeshProUGUI finalScoreText;
 
         [Header("Game Settings")]
         public float gameDuration = 60f;
@@ -76,6 +77,10 @@ namespace BalloonPopper.Scripts {
 
             if (gameOverPanel) {
                 gameOverPanel.SetActive(true);
+
+                if (finalScoreText) {
+                    finalScoreText.text = "Final Score: " + _score;
+                }
             }
 
             BalloonSpawner spawner = FindFirstObjectByType<BalloonSpawner>();
@@ -86,6 +91,10 @@ namespace BalloonPopper.Scripts {
 
         public void RestartGame() {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public bool IsGameActive() {
+            return _gameActive;
         }
     }
 }
